@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const app = express();
@@ -42,6 +43,7 @@ io.on("connection", socket => {
 });
 
 //when yarn build is ran - app uses client directory
+//
 if (process.env.PROD) {
     app.use(express.static(path.join(_dirname, './client/build')));
     app.get('*', (req, res) => {
