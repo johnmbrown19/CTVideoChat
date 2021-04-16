@@ -1,9 +1,11 @@
 const express = require("express");
 const http = require("http");
 const app = express();
+const path = require("path");
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
+
 
 //holds list of users in a room
 const rooms = {};
