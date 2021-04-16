@@ -2,10 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const http = require("http");
 const app = express();
-const path = require("path");
 const server = http.createServer(app);
 const socket = require("socket.io");
 const io = socket(server);
+const path = require("path");
 
 
 //holds list of users in a room
@@ -47,7 +47,7 @@ io.on("connection", socket => {
 if (process.env.PROD) {
     app.use(express.static(path.join(__dirname, './client/build')));
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname, '.client/build/index.html'));
+        res.sendFile(path.join(__dirname, './client/build/index.html'));
     });
 }
 
