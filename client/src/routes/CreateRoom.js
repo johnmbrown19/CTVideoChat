@@ -11,8 +11,8 @@ const CreateRoom = (props) => {
     //returns a simple button that when clicked takes user
     //to Room.js where their A/V streams are shown
     return (
-        <button onClick={create}>Enter Room</button>
+        <button onClick={create}>Create Room</button>
     );
 }
- 
+
 export default CreateRoom;

@@ -3,7 +3,7 @@ import io from "socket.io-client";
 
 const Room = (props) => {
     const userVideo = useRef();
-    const partnerVideo = useRef();
+    const guestVideo = useRef();
     const peerRef = useRef();
     const socketRef = useRef();
     const otherUser = useRef();
@@ -28,9 +28,9 @@ const Room = (props) => {
                 otherUser.current = userID;
             });
 
-            socketRef.current.on("offer", handleRecieveCall);
+            socketRef.current.on("offer", recieveCall);
 
-            socketRef.current.on("answer", handleAnswer);
+            socketRef.current.on("answer", answerCall);
 
             socketRef.current.on("ice-candidate", handleNewICECandidateMsg);
         });
@@ -69,7 +69,6 @@ const Room = (props) => {
         return peer;
     }
 
-
     function handleNegotiationNeededEvent(userID) {
         peerRef.current.createOffer().then(offer => {
             return peerRef.current.setLocalDescription(offer);
@@ -84,7 +83,7 @@ const Room = (props) => {
     }
 
     //function that handles incoming call from second user
-    function handleRecieveCall(incoming) {
+    function recieveCall(incoming) {
         peerRef.current = createPeer();
         const desc = new RTCSessionDescription(incoming.sdp);
         peerRef.current.setRemoteDescription(desc).then(() => {
@@ -104,7 +103,7 @@ const Room = (props) => {
     }
 
     //function that answers call from second user
-    function handleAnswer(message) {
+    function answerCall(message) {
         const desc = new RTCSessionDescription(message.sdp);
         peerRef.current.setRemoteDescription(desc).catch(e => console.log(e));
     }
@@ -128,14 +127,14 @@ const Room = (props) => {
     }
 
     function handleTrackEvent(e) {
-        partnerVideo.current.srcObject = e.streams[0];
+        guestVideo.current.srcObject = e.streams[0];
     };
 
     //returns A/V streams of users in room
     return (
         <div>
             <video autoPlay ref={userVideo} />
-            <video autoPlay ref={partnerVideo} />
+            <video autoPlay ref={guestVideo} />
         </div>
     );
 };
