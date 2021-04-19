@@ -1,3 +1,4 @@
+//imports and requires
 require("dotenv").config();
 const express = require("express");
 const http = require("http");
@@ -8,11 +9,12 @@ const io = socket(server);
 const path = require("path");
 
 
-//holds list of users in a room
+//holds collection of users in a room
 const rooms = {};
 
 //generate connection using socket, allowing 2 users to join 1 room
 //if they have the same URL ID
+//runs when a second user joins room
 io.on("connection", socket => {
     socket.on("join room", roomID => {
         if (rooms[roomID]) {
@@ -26,7 +28,7 @@ io.on("connection", socket => {
             socket.to(otherUser).emit("user joined", socket.id);
         }
     });
-
+ 
     socket.on("offer", payload => {
         io.to(payload.target).emit("offer", payload);
     });

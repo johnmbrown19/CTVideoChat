@@ -11,7 +11,10 @@ const CreateRoom = (props) => {
     //returns a simple button that when clicked takes user
     //to Room.js where their A/V streams are shown
     return (
-        <button onClick={create}>Create Room</button>
+        <div class="container">
+            <button onClick={create}>Create Room</button>
+            <img src={ require ("../logosmallwhitebackground.png")} alt="CT banner image"/>
+        </div>
     );
 }
 
